@@ -128,8 +128,9 @@ def _go_tool_binary_impl(ctx):
             output = bat,
             content = cmd,
         )
+
         ctx.actions.run(
-            executable = bat,
+            executable = bat.path.replace("/", "\\"),
             inputs = sdk.libs + sdk.headers + sdk.tools + ctx.files.srcs + [sdk.go],
             outputs = [cout],
             env = {"GOROOT": sdk.root_file.dirname},  # NOTE(#2005): avoid realpath in sandbox
